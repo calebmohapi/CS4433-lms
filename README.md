@@ -1,14 +1,8 @@
-# Moderated Learning Management System (LMS)
+# Learning Management System (LMS)
 
 **Version:** 1.1 · **Course:** CS4433 Final Project · **License:** MIT
 
 A console-based, offline-first Learning Management System for a secondary school. Handles users, courses, assignments, submissions, marking, moderation, and release, with a complete audit trail of every mark change.
-
-## Status
-
-![CI](https://github.com/YOUR_USERNAME/lms-cs4433/actions/workflows/ci.yml/badge.svg)
-[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue)](https://en.cppreference.com/w/cpp/17)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## Features
 
