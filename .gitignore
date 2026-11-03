@@ -1,0 +1,37 @@
+# Build artefacts
+build/
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.pdb
+*.ilk
+
+# Runtime data (do NOT commit — it's generated on first run)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Coverage
+*.gcov
+*.gcda
+*.gcno
+coverage/
