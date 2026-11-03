@@ -1,6 +1,6 @@
 # Learning Management System (LMS)
 
-**Version:** 1.1 · **Course:** CS4433 Final Project · **License:** MIT
+**Version:** 1.0 · **Course:** CS4433 Final Project
 
 A console-based, offline-first Learning Management System for a secondary school. Handles users, courses, assignments, submissions, marking, moderation, and release, with a complete audit trail of every mark change.
 
