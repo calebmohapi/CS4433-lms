@@ -32,7 +32,7 @@ A console-based, offline-first Learning Management System for a secondary school
 
 ## Building
 
-### Ubuntu
+### Windows
 
 Open the MSYS2 UCRT64 terminal
 
