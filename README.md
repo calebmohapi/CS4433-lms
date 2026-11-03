@@ -1,84 +1,67 @@
-# Learning Management System (LMS)
+# Moderated Learning Management System (LMS)
 
-C++17 / SQLite console application — CS4433 Final Project.
+**Version:** 1.1 · **Course:** CS4433 Final Project · **License:** MIT
+
+A console-based, offline-first Learning Management System for a secondary school. Handles users, courses, assignments, submissions, marking, moderation, and release, with a complete audit trail of every mark change.
+
+## Status
+
+![CI](https://github.com/YOUR_USERNAME/lms-cs4433/actions/workflows/ci.yml/badge.svg)
+[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue)](https://en.cppreference.com/w/cpp/17)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## Features
 
-- Role-based access for Administrator, Lecturer, Head of Department, Student
-- Submission lifecycle: Submitted → Late → Marked → Moderated → Released
-- Late penalty: 10% per day for 3 days, zero after 72 hours
-- Individual and class-wide extensions
-- Full audit log of every mark change (who, when, old, new, reason)
-- Offline-first, single-file SQLite storage
+- **Role-based access** — Administrator, Lecturer, Head of Department, Student
+- **Submission lifecycle** — Submitted → Late → Marked → Moderated → Released (FR15)
+- **Late penalty** — 10% per day up to 3 days, zero after 72 hours (FR9)
+- **Extensions** — individual (FR6) and class-wide (FR16, CR1), both with mandatory reason
+- **Audit log** — every mark change recorded: who, when, old, new, reason (FR14)
+- **Offline-first** — single-file SQLite database, no network (NFR2)
+- **Secure** — salted iterated SHA-256; parameterised queries only (NFR3)
+- **Robust** — invalid input rejected, no crashes (NFR4)
+- **Tested** — ≥ 70% line coverage of business-logic layers (NFR5)
+- **Durable** — data survives process kill and restart (NFR6)
 
-## Build
+## Requirements
 
-### Prerequisites
+### Runtime
 
-- C++17 compiler (GCC ≥ 9, Clang ≥ 7, MSVC ≥ 2019)
+- Windows 10/11 (x64) or any modern Linux (glibc ≥ 2.28)
+- 50 MB disk space, no network connection required
+
+### Build tools
+
+- C++17 compiler: GCC ≥ 9 / Clang ≥ 7 / MSVC ≥ 2019
 - CMake ≥ 3.15
-- SQLite3 development libraries
+- SQLite3 development headers and libraries
 
-On Windows:
+## Building
+
+### Ubuntu
+
+Open the MSYS2 UCRT64 terminal
 
 ```bash
-pacman -S --needed mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-sqlite3
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
-cmake --build build -j
-./build/lms
+# One-time dependency install
+pacman -S --needed \
+  mingw-w64-ucrt-x86_64-gcc \
+  mingw-w64-ucrt-x86_64-cmake \
+  mingw-w64-ucrt-x86_64-make \
+  mingw-w64-ucrt-x86_64-sqlite3
 
-Default accounts (seeded on first run)
+# Build
+cd /c/Users/YOU/Documents/lms
+rm -rf build && mkdir build && cd build
 
-User Password Role
-admin admin123 Administrator
-hod hod123 Head of Department (CS)
-lect1 lect123 Lecturer (CS)
-lect2 lect123 Lecturer (Math)
-stud1 stud123 Student (CS)
-stud2 stud123 Student (CS)
+cmake .. -G "Unix Makefiles" \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_TESTS=ON \
+  -DSQLite3_INCLUDE_DIR=/ucrt64/include \
+  -DSQLite3_LIBRARY=/ucrt64/lib/libsqlite3.dll.a
 
-Project structure
+cmake --build . -j"$(nproc)"
 
-lms/
-├── CMakeLists.txt
-├── src/
-│   ├── types.h              Enums + string conversions
-│   ├── util.h/.cpp          Hashing, ISO-8601 time helpers
-│   ├── domain.h/.cpp        User hierarchy, Submission, IPenaltyPolicy
-│   ├── data.h/.cpp          SQLite wrapper + repositories
-│   ├── services.h/.cpp      Application services (Auth, Admin, Lecturer, Student, Moderation)
-│   ├── ui.h/.cpp            Console UI
-│   └── main.cpp             Entry point + seed
-└── tests/test_main.cpp      GoogleTest-style unit
-
-Design patterns used
-
-Factory — UserFactory creates the right User subclass from a role string
-
-Strategy — IPenaltyPolicy / TenPercentPerDayPolicy
-
-Observer — ISubmissionObserver / AuditLogger
-
-Repository — one interface per aggregate, SQLite implementations behind
-
-**`LICENSE`**
-
-Copyright (c) 2026 Hlalefang Mohapi
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+#Run
+cd build
+./lms
